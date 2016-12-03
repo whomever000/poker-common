@@ -1,6 +1,7 @@
 package card
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 )
@@ -137,8 +138,9 @@ func ParseCard(str string) (Card, error) {
 
 	// Expect 2 cards.
 	if len(str) != 2 {
-		return CardInvalid, fmt.Errorf("failed to parse card: expected len=2, got %v",
-			len(str))
+		return CardInvalid, fmt.Errorf("failed to parse card: expected len=2, got %v. "+
+			"str=%v",
+			len(str), str)
 	}
 
 	str = strings.ToLower(str)
@@ -176,8 +178,12 @@ func ParseCard(str string) (Card, error) {
 		return CardInvalid, fmt.Errorf("failed to parse card: %v", str)
 	}
 
-	fmt.Println(value, color, (value-2)+(14*color))
 	return card((value - 2) + (13 * color)), nil
+}
+
+// MarshalJSON marshals the string representation of a card.
+func (c card) MarshalJSON() ([]byte, error) {
+	return json.Marshal(c.String())
 }
 
 const (

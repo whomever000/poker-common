@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/whomever000/poker/hand/card"
+	"github.com/whomever000/poker-common/card"
 )
 
 type Round struct {
@@ -38,6 +38,7 @@ type Hand struct {
 	Button     PlayerPosition
 	SmallBlind PlayerPosition
 	BigBlind   PlayerPosition
+	ThisPlayer *PlayerCards
 	Players    []Player
 	Rounds     []Round
 	Result     *Result

@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"strconv"
 
-	"github.com/whomever000/poker/hand/card"
+	"github.com/whomever000/poker-common/card"
 )
 
 // Player represents a poker player.
