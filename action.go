@@ -25,7 +25,7 @@ func (a *foldAction) Amount() Amount {
 	return 0
 }
 func (a *foldAction) String() string {
-	return "fold"
+	return "folds "
 }
 
 // Check action ////////////////////////////////////////////////////////////////
@@ -41,7 +41,7 @@ func (a *checkAction) Amount() Amount {
 	return 0
 }
 func (a *checkAction) String() string {
-	return "check"
+	return "checks "
 }
 
 // Call action /////////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ func (a *callAction) Amount() Amount {
 	return a.amount
 }
 func (a *callAction) String() string {
-	return fmt.Sprintf("call (%v)", a.amount)
+	return fmt.Sprintf("calls %v", a.amount)
 }
 
 // Raise action ////////////////////////////////////////////////////////////////
@@ -77,7 +77,8 @@ func (a *raiseAction) Amount() Amount {
 	return a.amount
 }
 func (a *raiseAction) String() string {
-	return fmt.Sprintf("raise (%v)", a.amount)
+	// TODO: Do not use $0.00
+	return fmt.Sprintf("raises $0.00 to %v", a.amount)
 }
 
 // Bet action //////////////////////////////////////////////////////////////////
@@ -95,5 +96,5 @@ func (a *betAction) Amount() Amount {
 	return a.amount
 }
 func (a *betAction) String() string {
-	return fmt.Sprintf("bet (%v)", a.amount)
+	return fmt.Sprintf("bets %v", a.amount)
 }

@@ -1,7 +1,11 @@
 package window
 
 import (
+	"fmt"
 	"image"
+	"image/png"
+	"os"
+	"os/exec"
 )
 
 var target Window
@@ -43,4 +47,41 @@ func AttachByID(winID int) (Window, error) {
 // Get returns the target window.
 func Get() Window {
 	return target
+}
+
+// DebugImage saves an image with the specified name, and opens it in a viewer.
+func DebugImage(img image.Image, nameFmt string, args ...interface{}) {
+	name := fmt.Sprintf(nameFmt, args...)
+	pid := fmt.Sprintf("%v", os.Getpid())
+	fname := "./debug_img/[" + pid + "] " + name + ".png"
+
+	exists := true
+
+	_, err := os.Stat(fname)
+	if err != nil {
+		exists = false
+	}
+
+	f, err := os.Create(fname)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	err = png.Encode(f, img)
+	if err != nil {
+		panic(err)
+	}
+
+	f.Sync()
+
+	if exists {
+		return
+	}
+
+	cmd := exec.Command("xdg-open", fname)
+	err = cmd.Start()
+	if err != nil {
+		panic(err)
+	}
 }

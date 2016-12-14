@@ -12,12 +12,18 @@ type Amount int
 
 // String returns a string representing the amount in the form '$2.32'.
 func (a Amount) String() string {
+	if a == -1 {
+		return fmt.Sprintf("All In")
+	}
+	if a%100 == 0 {
+		return fmt.Sprintf("$%.0f", float64(a)/100)
+	}
 	return fmt.Sprintf("$%.2f", float64(a)/100)
 }
 
 // NewAmount creates an amount from a float.
 func NewAmount(amount float64) Amount {
-	return Amount(amount * 100)
+	return Amount((amount * 100) + 0.5)
 }
 
 // ParseAmount parses an amount from a string.
@@ -29,6 +35,7 @@ func ParseAmount(amount string) (Amount, error) {
 
 	val, err := strconv.ParseFloat(amount, 64)
 	if err != nil {
+		fmt.Println("fail", amount)
 		return 0, err
 	}
 

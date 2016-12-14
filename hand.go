@@ -49,21 +49,14 @@ func (h *Hand) String() string {
 
 	// Header
 	str += fmt.Sprintf("%v Hand #%v: %v ", h.Client, h.HandID, h.Table.Game)
-	str += fmt.Sprintf("(%v) - %v\n", h.Table.Stakes,
-		h.Date)
+	str += fmt.Sprintf("(%v) - %v\n", h.Table.Stakes, h.Date)
 	str += fmt.Sprintf("Table '%v' %v-max Seat #%v is the button\n",
 		h.Table.Name, h.Table.Size, h.Button)
 
 	// Player names and stacks
 	for i := 0; i < h.Table.Size; i++ {
-		str += fmt.Sprintf("Seat %v: %v (%v in chips)\n", i+1, h.Players[i].Name,
+		str += fmt.Sprintf("Seat %v: %v (%v in chips) \n", i+1, h.Players[i].Name,
 			h.Players[i].Stack)
-	}
-
-	// Make sure small and big blind have been posted
-	if len(h.Rounds) == 0 ||
-		len(h.Rounds[0].Actions) < 2 {
-		return str
 	}
 
 	// Print small and big blind
@@ -81,15 +74,15 @@ func (h *Hand) String() string {
 		if r == 0 {
 			str += fmt.Sprintf("*** HOLE CARDS ***\n")
 		} else if r == 1 {
-			str += fmt.Sprintf("*** FLOP *** [%v %v %v]\n", h.Rounds[r].Cards[2],
-				h.Rounds[r].Cards[3], h.Rounds[r].Cards[4])
+			str += fmt.Sprintf("*** FLOP *** [%v %v %v]\n", h.Rounds[r].Cards[0],
+				h.Rounds[r].Cards[1], h.Rounds[r].Cards[2])
 		} else if r == 2 {
-			str += fmt.Sprintf("*** TURN *** [%v %v %v][%v]\n", h.Rounds[r].Cards[2],
-				h.Rounds[r].Cards[3], h.Rounds[r].Cards[4], h.Rounds[r].Cards[5])
+			str += fmt.Sprintf("*** TURN *** [%v %v %v] [%v]\n", h.Rounds[r].Cards[0],
+				h.Rounds[r].Cards[1], h.Rounds[r].Cards[2], h.Rounds[r].Cards[3])
 		} else if r == 3 {
-			str += fmt.Sprintf("*** RIVER *** [%v %v %v %v][%v]\n", h.Rounds[r].Cards[2],
-				h.Rounds[r].Cards[3], h.Rounds[r].Cards[4], h.Rounds[r].Cards[5],
-				h.Rounds[r].Cards[6])
+			str += fmt.Sprintf("*** RIVER *** [%v %v %v %v] [%v]\n", h.Rounds[r].Cards[0],
+				h.Rounds[r].Cards[1], h.Rounds[r].Cards[2], h.Rounds[r].Cards[3],
+				h.Rounds[r].Cards[4])
 		}
 
 		for ; i < len(h.Rounds[r].Actions); i++ {
@@ -100,7 +93,7 @@ func (h *Hand) String() string {
 		}
 	}
 
-	if h.Result.Winner == 0 {
+	if h.Result == nil {
 		return str
 	}
 
