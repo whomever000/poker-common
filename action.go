@@ -78,7 +78,7 @@ func (a *raiseAction) Amount() Amount {
 }
 func (a *raiseAction) String() string {
 	// TODO: Do not use $0.00
-	return fmt.Sprintf("raises $0.00 to %v", a.amount)
+	return fmt.Sprintf("raises to %v", a.amount)
 }
 
 // Bet action //////////////////////////////////////////////////////////////////

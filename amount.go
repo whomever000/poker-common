@@ -32,10 +32,14 @@ func ParseAmount(amount string) (Amount, error) {
 	amount = strings.Replace(amount, "$", "", -1)
 	amount = strings.Replace(amount, "USD", "", -1)
 	amount = strings.Replace(amount, " ", "", -1)
+	amount = strings.Replace(amount, ",", "", -1)
 
 	val, err := strconv.ParseFloat(amount, 64)
 	if err != nil {
-		fmt.Println("fail", amount)
+		fmt.Println("failed to parse amount:", amount)
+		// TODO: remove this
+		return NewAmount(0), nil
+
 		return 0, err
 	}
 
