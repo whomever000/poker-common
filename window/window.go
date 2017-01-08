@@ -53,16 +53,18 @@ func Get() Window {
 func DebugImage(img image.Image, nameFmt string, args ...interface{}) {
 	name := fmt.Sprintf(nameFmt, args...)
 	pid := fmt.Sprintf("%v", os.Getpid())
-	fname := "./debug_img/[" + pid + "] " + name + ".png"
+	dir := "./debug_img/"
+	file := "[" + pid + "] " + name + ".png"
 
 	exists := true
 
-	_, err := os.Stat(fname)
+	_, err := os.Stat(dir + file)
 	if err != nil {
 		exists = false
 	}
 
-	f, err := os.Create(fname)
+	os.MkdirAll(dir, os.ModePerm)
+	f, err := os.Create(dir + file)
 	if err != nil {
 		panic(err)
 	}
@@ -79,7 +81,7 @@ func DebugImage(img image.Image, nameFmt string, args ...interface{}) {
 		return
 	}
 
-	cmd := exec.Command("xdg-open", fname)
+	cmd := exec.Command("xdg-open", dir+file)
 	err = cmd.Start()
 	if err != nil {
 		panic(err)

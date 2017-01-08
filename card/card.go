@@ -148,7 +148,7 @@ func ParseCard(str string) (Card, error) {
 	var value int
 	var color int
 
-	switch int(str[0]) {
+	switch str[0] {
 	case '2', '3', '4', '5', '6', '7', '8', '9':
 		value = int(str[0]) - int('0')
 	case 't':
@@ -165,7 +165,7 @@ func ParseCard(str string) (Card, error) {
 		return CardInvalid, fmt.Errorf("failed to parse card: %v", str)
 	}
 
-	switch int(str[1]) {
+	switch str[1] {
 	case 'c':
 		color = 0
 	case 'd':
