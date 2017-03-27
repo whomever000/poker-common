@@ -28,6 +28,9 @@ type Window interface {
 
 	// String returns string representation of window id.
 	String() string
+
+	// Send keystroke to window.
+	PressKey(key string) error
 }
 
 // Attach attaches to a window based on its name.

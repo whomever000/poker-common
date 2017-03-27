@@ -3,6 +3,7 @@ package window
 import (
 	"fmt"
 	"image"
+	"os/exec"
 	"strings"
 	"time"
 
@@ -152,4 +153,14 @@ func (win *xwin) Process() (string, error) {
 // String returns string representation of window id.
 func (win *xwin) String() string {
 	return string(int(win.Id))
+}
+
+// Send keystroke to window.
+// Note: puts window in focus.
+func (win *xwin) PressKey(key string) error {
+	w := (*xwindow.Window)(win)
+	w.Focus()
+
+	cmd := exec.Command("xdotool", "key", key)
+	return cmd.Run()
 }
